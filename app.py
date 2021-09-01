@@ -2,7 +2,7 @@ from flask import Flask, jsonify
 from flask import Flask, render_template, Response
 import cv2
 
-camera = cv2.VudeoCapture('rtsp://freja.hiof.no:1935/rtplive/_definst_/hessdalen03.stream')
+camera = cv2.VideoCapture('rtsp://freja.hiof.no:1935/rtplive/_definst_/hessdalen03.stream')
 
 app = Flask(__name__)
 
@@ -38,6 +38,7 @@ data = [
 @app.route('/')
 def hello():
     return "Hello Flask-Herok"
+
 
 @app.route('/api', methods=['GET'])
 def get_api():
