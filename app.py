@@ -6,16 +6,17 @@ camera = cv2.VideoCapture('rtsp://freja.hiof.no:1935/rtplive/_definst_/hessdalen
 
 app = Flask(__name__)
 
-def gen_frames():  
+def gen_frames(): # generate frame by frame from camera
     while True:
-        success, frame = camera.read()  # read the camera frame
+        # Capture frame-by-frame
+        success, frame = camera.read() # read the camera frame
         if not success:
             break
         else:
             ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
             yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show resul
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') # concat frame one by one and show result
 
 data = [
         {
@@ -49,7 +50,7 @@ def Home(name):
     return render_template('home.html', name_html=name)
 
 @app.route('/name')
-    return"<font color=blue>วรางคณา นุชเกษม</font> <br> เลขที่ 18 ชั้น ม.4/10"
+    return"<font color=blue>วรางคณา นุชเกษม</font> <br>เลขที่ 18 ชั้น ม.4/10"
 
 @app.route('/video')
 def index():
